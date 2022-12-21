@@ -3,11 +3,12 @@ import ItemSelect from './components/ItemSelect.vue';
 import ComparisonSummary from './components/ComparisonSummary.vue';
 import { useItemComparison } from './composables/itemComparison';
 import { onMounted, ref } from 'vue';
+
 const firstItem = ref();
 const secondItem = ref();
-const { result } = useItemComparison(firstItem, secondItem);
+const result = useItemComparison(firstItem, secondItem);
 let products = ref([]);
-console.log(result);
+
 onMounted(() => {
   fetch('https://dummyjson.com/products')
     .then((res) => res.json())
