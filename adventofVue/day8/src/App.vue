@@ -3,23 +3,40 @@
     <section class="flex flex-col items-center leading-loose text-center">
       <div class="text-3xl">
         <span class="i-twemoji-christmas-tree"></span>
-        Happy Holidays!
+        {{ t('happyHolidays') }}
         <span class="i-twemoji-world-map"></span>
       </div>
-      <!-- Dates - Check out locales/en.json for the key -->
-      <!-- Controls - I give you an .icon-button class if you want to use it -->
-      <!-- Flags - the current locale -->
+      <div class="text-2xl mt-4">
+        {{ d(christmasDate, 'long') }} is in
+        <span class="green">{{ t('day', christmasIn) }}</span>
+      </div>
+      <div class="w-50 mt-5 flex justify-between">
+        <select v-model="locale">
+          <option value="en">en</option>
+          <option value="de">de</option>
+          <option value="ja-JP">ja-JP</option>
+        </select>
+        <div class="text-xl">
+          <span :class="flags[locale]" />
+          {{ t('language') }}
+        </div>
+      </div>
     </section>
   </main>
 </template>
 
 <script setup>
 import { useI18n } from 'vue-i18n'
-
-// See the README about tricky timezone issues!
-// I figured since this is i18n-friendly, we'd wanna
-// make sure the timezones were right :-)
-const christmasDate = new Date('2022/12/25')
+const { t, locale, d } = useI18n()
+const christmasDate = new Date('2023/12/25')
+const now = new Date()
+let christmasIn = christmasDate.getTime() - now.getTime()
+christmasIn = Math.floor(christmasIn / (1000 * 60 * 60 * 24))
+const flags = {
+  en: 'i-twemoji-flag-united-states',
+  de: 'i-twemoji-flag-germany',
+  'ja-JP': 'i-twemoji-flag-japan',
+}
 </script>
 
 <style scoped>
