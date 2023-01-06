@@ -5,19 +5,10 @@ import './base.css'
 const app = createApp(App)
 
 app.directive('christmas', (el, { arg, value }) => {
-  el.classList.add('christmas-text')
-  switch (arg) {
-    case 'red':
-      el.classList.add('red')
-      break
-    case 'green':
-      el.classList.add('green')
-      break
-    default:
-      el.classList.add('red-green')
-      if (value) el.style.animationDuration = value + 's'
-      break
-  }
+  const duration = value ?? 2
+  const color = arg ?? 'red-green'
+  el.classList.add('christmas-text', color)
+  el.style.animationDuration = duration + 's'
 })
 
 app.mount('#app')
